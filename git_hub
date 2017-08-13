@@ -1,0 +1,78 @@
+1. python 설치 (32bit or 64bit)
+
+2. pycharm 설치
+ - https://www.jetbrains.com/pycharm/download/#section=windows
+
+3. git 설치(os 버전에 따라)
+ - https://git-scm.com/downloads
+
+4. C 또는 D 드라이브에 가상 환경을 설치할 폴더와 source 폴더 생성.
+ - 가상 환경 폴더 (C:\python\envVirtual)
+ - source 폴더 (C:\python\source)
+
+5. pycharm 실행
+ - Create New Project
+
+6. Interpreter 설정
+ - 가상 환경 생성(Create VirturlEnv)
+ - 4번에서 설정한 가상 환경 폴더 지정(C:\python\envVirtual)
+ - Base interpreter (컴퓨터에 설치된 파이썬 지정)
+
+7. Location 설정
+ - 4번에서 설정한 source 폴더 지정(C:\python\source)
+
+8. Project 오픈
+
+9. File -> Settings
+ ■ Version Control
+  - Git
+   - Path to Git executable : C:\Program Files\Git\bin\git.exe(git.exe 파일 지정)
+   - test 수행.
+   - Apply
+
+  - GitHub
+   - Auth Type : Password
+   - Login 과 Password 설정 후 test 수행
+   - Apply
+
+ ■ Project: source
+  - Project Interpreter
+   - + 버튼을 눌러서 원하는 패키지 다운로드
+
+10. 파이썬 패키지 생성 후 해당 디렉토리에 파이썬 파일 생성
+
+11. GitHub 연동
+ ■ GitHub 서버쪽에 소스 등록하는 경우
+  - VCS -> Import to version Control
+   1) Create git repository
+    - 현재 파이썬 source 경로 지정 (C:\python\source)
+   2) Share Project On GitHub
+    - GitHub 쪽으로 현재 지정된 repository 등록
+    - share 버튼 클릭
+    - Add Files For Initial Commit 화면에서 commit 수행
+    - 안될 시(VCS->Git->Commit 눌러서 Commit and Push 수행)
+
+ ■ GitHub 서버에서 Pycharm 으로 소스를 가져오는 경우
+  - VCS -> Checkout From Version Control -> GitHub
+
+ ■ 변경된 소스 GitHub 등록
+  - VCS -> Git -> commit file -> commit and push
+
+ ■ GitHub 서버로부터 소스 가져오는 방법(변경된 사항만)
+  - VCS -> Git -> Pull
+
+-----------------------------------------------------------------------------------------------
+기타 명령어
+
+■ 현재 지정된 파이썬 파일 수행
+ - alt + shift + f10
+
+■ 전에 수행된 파이썬 파일 수행
+ - shift + f10
+
+■ 주석
+ - ctrl + /
+
+■ 디버그
+ - alt + shift + f9
+
