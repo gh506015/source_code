@@ -195,38 +195,166 @@ halloween      # datetime.date(2015, 10, 31)
 halloween.day  # 31
 halloween.month  # 10
 halloween.year  # 2015
-halloween.isoformat()   # 날짜 출력하는 메서드
+halloween.isoformat()   # 날짜 출력하는 메서드, ISO포맷(년, 월, 일)
+
+# today() 메서드를 사용하여 오늘날짜 출력
+from datetime import date
+now = date.today()
+now   # datetime.date(2017, 10, 26)
+
+# timedelta 객체를 사용하여 날짜에 시간간격을 더해보자
+from datetime import timedelta
+one_day = timedelta(days=1)    # 날짜기간 정의하는 객체 (일, 초, 마이크로초, 밀리초, ... days 말고 별 쓸모 없음)
+two_day = timedelta(2, 0, 10)  # delta, 변화량을 의미한다.
+one_day
+two_day
+now + two_day
+tomorrow = now + one_day
+tomorrow
+now + 17*one_day
+yesterday = now - one_day
+yesterday
+
+# 날짜의 범위는 date.min(year=1, month=1, day=1)부터 date.max(year=9999, month=12, day=31)까지다. 결과적으로 역사적 혹은 천문학적인 날짜는 계산할 수 없다.
+date.min   # datetime.date(1, 1, 1)
+date.max   # datetime.date(9999, 12, 31)
+
+# datetime 모듈의 time 객체는 하루의 시간을 나타내는데 사용된다.
+from datetime import time   # timedelta의 시간버전
+noon = time(12, 0, 0)
+noon
+noon.hour
+noon.minute
+noon.second
+noon.microsecond
+# 인자는 시hour부터 마이크로초microsecond 순으로 입력한다. 컴퓨터는 마이크로초를 정확하게 계산될 수 없다.
+
+# datetime 객체는 날짜와 시간을 모두 포함한다. January 2, 2015, at 3:04 A.M 5초, 6마이크로초와 같이 한번에 생성된다.
+from datetime import datetime
+some_day = datetime(2015, 1, 2, 3, 4, 5, 6)
+
+# datetime 객체에도 isoformat() 메서드가 있다.
+some_day.isoformat()
+# '2015-01-02T03:04:05.000006', 중간의 T는 날짜와 시간을 구분한다.
+
+# datetime 객체에서 now() 메서드로 현재의 날짜와 시간을 얻을 수 있다.
+from datetime import datetime
+now = datetime.now()
+now   # datetime.datetime(2017, 10, 26, 14, 24, 2, 724044)
+now.year
+now.month
+now.day
+now.hour
+now.minute
+now.second
+now.microsecond
+
+# combine()으로 date 객체와 time 객체를 datetime 객체로 병합할 수 있다.
+from datetime import datetime, date, time
+noon = time(12)
+this_day = date.today()
+noon_today = datetime.combine(this_day, noon)
+noon_today   # datetime.datetime(2017, 10, 26, 12, 0)
+
+# datetime 객체에서 date()와 time() 메서드를 사용하여 날짜와 시간을 얻을 수 있다.
+noon_today.date()
+noon_today.time()
 
 
+# 10.4.2 time 모듈
+# 파이썬에서 datetime 모듈의 time 객체와 별도의 time 모듈이 혼란스럽다. 더군다나 time 모듈에는 time()이라는 함수가 있다.
+# 절대시간을 나타내는 한가지 방법은 어떤 시작점 이후 시간의 초를 세는 것이다. 유닉스 시간은 1970년 1월 1일 자정 이후 시간의 초를 사용한다.
+# 이 값을 epoch(에포치)라고 부르며, 에포치는 시스템 간에 날짜와 시간을 교환하는 아주 간단한 방식이다.
+# time 모듈의 time() 함수는 현재시간을 에포치값으로 반환한다.
+import time
+now = time.time()
+now
+
+# ctime() 함수를 사용하여 에포치값을 문자열로 반환할 수 있다.
+time.ctime(now)
+
+# 또한 strftime()을 사용하여 날짜와 시간을 문자열로 변환할 수 있다. 이는 datetime, date, time 객체에서 메서드로 제공되고, time 모둘에서 함수로 제공된다.
+# strftime()은 다음처럼 문자열의 출력포맷을 지정할 수 있다.
+# 문자열포맷     날짜/시간 단위          범위
+# %Y            년                  1900 ~ ...
+# %m            월                  01 ~ 12
+# %B            월 이름             January, ...
+# %b            월 축약이름          Jan, ...
+# %d            월의 일자           01 ~ 31
+# %A            요일 이름            Sunday,
+# %a            요일 축약이름         Sun, ...
+# %H            24시간            00 ~ 23
+# %I            12시간              01 ~ 12
+# %p            오전/오후           AM, PM
+# %M            분                 00 ~ 59
+# %S            초                00 ~ 59
+# 숫자는 자릿수에 맞춰 왼쪽에 0이 채워진다.
+# 다음은 time 모듈에서 제공하는 strftime() 함수다. 이것은 struct_time 객체를 문자열로 변환한다. 먼저 포맷문자열 fmt를 정의하고, 이것을 다시 사용하자
+import time
+fmt = "It's %A, %B %d, %Y, local time %I:%M:%S%p"
+t = time.localtime()
+t
+# time.struct_time(tm_year=2017, tm_mon=10, tm_mday=26, tm_hour=15, tm_min=26, tm_sec=51, tm_wday=3, tm_yday=299, tm_isdst=0)
+time.strftime(fmt, t)
+# "It's Thursday, October 26, 2017, local time 03:26:51PM" 와 이건 존트 놀랍다.
+
+# 이것을 다음과 같이 date 객체에 사용하면 날짜부분만 작동한다. 그리고 시간은 기본값으로 지정된다.
+from datetime import date
+some_day = date(2015, 12, 12)
+fmt = "It's %B %d, %Y, local time %I:%M:%S%p"
+some_day.strftime(fmt)
+# "It's December 12, 2015, local time 12:00:00AM", date를 제외한 나머지 요소는 디폴트 값으로
+
+# time 객체는 시간부분만 변환된다.
+from datetime import time
+some_time = time(10, 35)
+some_time.strftime(fmt)
+# "It's January 01, 1900, local time 10:35:00AM", time을 제외한 나머지 요소는 디폴트값으로
+# time 객체에서 날짜를 사용하는 것은 의미가 없다.
+
+# 문자열을 날짜나 시간으로 변환하기 위해 같은 포맷 문자열로 strptime()을 사용한다.
+# 정규표현식 패턴매칭은 없다. 문자열의 비형식부분(% 제외)이 정확히 일치해야한다. 2015-06-02와 같이 년-월-일이 일치하는 포캣을 지정해보자.
+# 날짜 문자열에서 대시(-) 대신 공백을 사용하면 무슨일이 일어날까?
+import time
+fmt = "%Y-%m-%d"
+time.strptime("2015 06 02", fmt)  # 예외출력, ValueError: time data '2015 06 02' does not match format '%Y-%m-%d'
+
+# 대시(-)를 붙이면 어떻게 될까?
+time.strptime("2015-06-02", fmt)
+# time.struct_time(tm_year=2015, tm_mon=6, tm_mday=2, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=1, tm_yday=153, tm_isdst=-1)
+
+# 값이 범위를 벗어나면 예외가 발생한다.
+time.strptime("2015-13-02", fmt)  # 예외, ValueError: time data '2015-13-02' does not match format '%Y-%m-%d'
+
+# 날짜를 여러 나라의 언어로 출력해보자
+import locale
+from datetime import date
+halloween = date(2015, 10, 31)
+for lang_country in ['ko_kr', 'en_us', 'fr_fr', 'de_de', 'es_es', 'is_is', ]:
+    locale.setlocale(locale.LC_TIME, lang_country)
+    halloween.strftime('%A, %B %d')
+# locale.Error: unsupported locale setting, 예외발생, 해결요망
+
+# lang_country에 대한 값은 어디서 찾을 수 있을까? 다음 예제를 실행하여 (몇 백 개의) 값을 모두 찾을 수 있다.
+import locale
+names = locale.locale_alias.keys()
+
+# 이전 예제 setlocale()에서 사용한 두 글자의 언어코드, 언더크소어, 두글자의 국가 코드처럼 names로부터 로케일 이름을 얻어온다.
+good_names = [name for name in names if len(name) == 5 and name[2] == '_']
+good_names
+good_names[:5]
+
+# 모든 독일어로 로케일을 원한다면 다음과 같이 실행한다.
+de = [name for name in good_names if name.startswith('de')]
+de
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# 10.4.4 대체모듈
+# 표준 라이브러리 모듈이 헷갈리거나 특정 포맷변환이 부족하다고 생각되는 경우, 외부 모듈을 사용할 수 있다.
+# arrow - 많은 날짜와 시간 함수를 결합하여 간단한 API를 제공한다.
+# dateutil - 이 모듈은 날짜 포맷을 파싱하고, 상대적인 날짜와 시간에 대해서도 처리한다.
+# iso8601 - ISO8601 포맷에 대한 표준 라이브러리의 부족한 부분을 보충한다.
+# fleming - 이 모듈은 표준시간대 함수를 제공한다.\
 
 
 
