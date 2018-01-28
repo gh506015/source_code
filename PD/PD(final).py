@@ -26,7 +26,7 @@ class Man_AI:
     def __init__(self, canvas):
         self.canvas = canvas
         self.man = canvas.create_rectangle(0, 0, 10, 20, fill='magenta')   # 왜 10으로 하면 안움직이는 걸까?
-        self.canvas.move(self.man, 295, 490)  # self.man 그리기
+        self.canvas.move(self.man, 295, 480)  # self.man 그리기
         self.x = 0
         self.y = 0
         self.man_pos = self.canvas.coords(self.man)  # self.man의 좌상우하의 좌표, 위치 선언
@@ -314,9 +314,9 @@ while 1:
 
     if Poop.ROTATION_CNT % 20 == 0:
         print('맞은횟수 :', Poop.HIT)  # Poop.judgement_point에 걸리지 않은 self.poop 고려
-        print('rotation횟수(200개) :', Poop.ROTATION_CNT)
+        print('rotation횟수(100개) :', Poop.ROTATION_CNT)
         # print('KEY_VALUE 데이터 개수 : {}/59700'.format(len(KEY_VALUE)))
-        print('KEY_VALUE 데이터 개수 : {}/29850'.format(len(KEY_VALUE)))
+        print('KEY_VALUE 데이터 개수 : {}/30000'.format(len(KEY_VALUE)))
         print('완성/랜덤혼합')
         print('===============================')
         Poop.HIT_list.append(Poop.HIT)

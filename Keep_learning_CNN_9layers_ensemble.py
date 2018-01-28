@@ -22,7 +22,7 @@ print('loaded!')
 train_num = round(int(data.shape[0]) * .8)
 print(train_num)
 print(train_num)  # 6402
-print(data.shape)  # 9145, 5626
+print(data.shape)  # 91 45, 5626
 y_tmp = np.zeros([len(data), 2])
 
 for i in range(len(data)):
